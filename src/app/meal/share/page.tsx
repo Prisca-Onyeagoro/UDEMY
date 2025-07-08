@@ -1,7 +1,10 @@
 import ImagePicker from "../../../../components/meal/ImagePicker";
 import { shareMeal } from "../../../../lib/ServerActions";
+import Mealform from "../../../../components/meal/Mealform";
+import { useActionState } from "react";
 
 export default function ShareMealPage() {
+  const [state, formAction] = useActionState(shareMeal, null);
   return (
     <>
       <header
@@ -108,22 +111,9 @@ export default function ShareMealPage() {
           <ImagePicker label="Your Image" name="image" />
 
           {/* IMAGE PICKER */}
-          <p className="text-right">
-            <button
-              type="submit"
-              className="
-                border-0 px-8 py-3 bg-gradient-to-r from-[#f9572a] to-[#ff9b05]
-                text-white rounded-sm cursor-pointer font-inherit text-[1.25rem]
-                shadow-[0_2px_5px_rgba(0,0,0,0.3)]
-                transition-all duration-300
-                hover:bg-gradient-to-r hover:from-[#fd4715] hover:to-[#f9b241]
-                focus:bg-gradient-to-r focus:from-[#fd4715] focus:to-[#f9b241]
-                disabled:bg-[#ccc] disabled:text-[#979797] disabled:cursor-not-allowed
-              "
-            >
-              Share Meal
-            </button>
-          </p>
+          <div className="text-right">
+            <Mealform />
+          </div>
         </form>
       </main>
     </>

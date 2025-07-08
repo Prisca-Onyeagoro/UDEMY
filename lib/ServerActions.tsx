@@ -1,23 +1,20 @@
-"use server";
+import { NextResponse } from "next/server";
+import { SaveMeal } from "@/lib/Meals";
 
-import { redirect } from "next/navigation";
-import { SaveMeal } from "./Meals";
-
-// server action to handle form submission
-// This function will be called when the form is submmited
-// it will recieve the form data as an argument
-export async function shareMeal(formData: FormData) {
-  "use server";
+export async function POST(request: Request) {
+  const formData = await request.formData();
 
   const meal = {
-    title: formData.get("title") as string,
-    summary: formData.get("summary") as string,
-    instruction: formData.get("instructions") as string,
-    creator: formData.get("name") as string,
-    creator_email: formData.get("email") as string,
-    image: formData.get("image") as Blob | string,
+    title: formData.get("title"),
+    summary: formData.get("summary"),
+    instruction: formData.get("instructions"),
+    creator: formData.get("name"),
+    creator_email: formData.get("email"),
+    image: formData.get("image"),
   };
 
+  // Validate fields here...
+
   await SaveMeal(meal);
-  redirect("/meal");
+  return NextResponse.json({ message: "Meal shared successfully!" });
 }

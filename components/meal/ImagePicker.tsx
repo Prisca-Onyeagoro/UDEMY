@@ -41,7 +41,7 @@ export default function ImagePicker({ label, name }: ImagePickerProps) {
       <div className="flex items-start gap-6 mb-4">
         <input
           type="file"
-          id="image"
+          id={name}
           accept="image/png, image/jpeg"
           name={name}
           ref={ImageInput}
