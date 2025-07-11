@@ -1,7 +1,8 @@
+"use client";
 import ImagePicker from "../../../../components/meal/ImagePicker";
-import { shareMeal } from "../../../../lib/ServerActions";
 import Mealform from "../../../../components/meal/Mealform";
 import { useActionState } from "react";
+import { shareMeal } from "../../../../lib/ServerActions";
 
 export default function ShareMealPage() {
   const [state, formAction] = useActionState(shareMeal, null);
@@ -30,7 +31,7 @@ export default function ShareMealPage() {
         <p>Or any other meal you feel needs sharing!</p>
       </header>
       <main className="w-[90%] max-w-[75rem] mx-auto my-12 text-white">
-        <form className="max-w-[50rem]" action={shareMeal}>
+        <form className="max-w-[50rem]" action={formAction}>
           <div className="flex gap-4">
             <p className="w-full">
               <label
@@ -43,7 +44,6 @@ export default function ShareMealPage() {
                 type="text"
                 id="name"
                 name="name"
-                required
                 className="block w-full px-4 py-2 rounded border border-[#454952] bg-[#1c2027] text-[1.25rem] font-montserrat text-[#ddd6cb] focus:outline-[#f99f2a] focus:bg-[#1f252d]"
               />
             </p>
@@ -58,7 +58,6 @@ export default function ShareMealPage() {
                 type="email"
                 id="email"
                 name="email"
-                required
                 className="block w-full px-4 py-2 rounded border border-[#454952] bg-[#1c2027] text-[1.25rem] font-montserrat text-[#ddd6cb] focus:outline-[#f99f2a] focus:bg-[#1f252d]"
               />
             </p>
@@ -74,7 +73,6 @@ export default function ShareMealPage() {
               type="text"
               id="title"
               name="title"
-              required
               className="block w-full px-4 py-2 rounded border border-[#454952] bg-[#1c2027] text-[1.25rem] font-montserrat text-[#ddd6cb] focus:outline-[#f99f2a] focus:bg-[#1f252d]"
             />
           </p>
@@ -89,7 +87,6 @@ export default function ShareMealPage() {
               type="text"
               id="summary"
               name="summary"
-              required
               className="block w-full px-4 py-2 rounded border border-[#454952] bg-[#1c2027] text-[1.25rem] font-montserrat text-[#ddd6cb] focus:outline-[#f99f2a] focus:bg-[#1f252d]"
             />
           </p>
@@ -104,10 +101,10 @@ export default function ShareMealPage() {
               id="instructions"
               name="instructions"
               rows={10}
-              required
               className="block w-full px-4 py-2 rounded border border-[#454952] bg-[#1c2027] text-[1.25rem] font-montserrat text-[#ddd6cb] focus:outline-[#f99f2a] focus:bg-[#1f252d]"
             ></textarea>
           </p>
+          {state?.message && <p className="text-white">{state.message}</p>}
           <ImagePicker label="Your Image" name="image" />
 
           {/* IMAGE PICKER */}

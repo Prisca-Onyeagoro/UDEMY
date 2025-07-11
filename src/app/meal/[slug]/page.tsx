@@ -2,6 +2,20 @@ import Image from "next/image";
 import food1 from "@/app/assets/food1.jpg";
 import { getMeal } from "../../../../lib/Meals";
 import { notFound } from "next/navigation";
+import { title } from "process";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  return {
+    title: `meal- ${slug}`,
+    description: ` This is the meal page for ${slug}`,
+  };
+}
 
 export default async function Mealapp({
   params,

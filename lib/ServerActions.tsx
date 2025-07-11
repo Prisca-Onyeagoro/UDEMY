@@ -1,8 +1,14 @@
-import { NextResponse } from "next/server";
-import { SaveMeal } from "@/lib/Meals";
+"use server";
 
-export async function POST(request: Request) {
-  const formData = await request.formData();
+import { NextResponse } from "next/server";
+import { SaveMeal } from "./Meals";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
+export async function shareMeal(prevState: any, formData: FormData) {
+  const isInvalidText = (text: any) => {
+    return !text || text.trim() === "";
+  };
 
   const meal = {
     title: formData.get("title"),
@@ -14,7 +20,20 @@ export async function POST(request: Request) {
   };
 
   // Validate fields here...
+  if (
+    isInvalidText(meal.title) ||
+    isInvalidText(meal.summary) ||
+    isInvalidText(meal.instruction) ||
+    isInvalidText(meal.creator) ||
+    isInvalidText(meal.creator_email) ||
+    (typeof meal.creator_email === "string" &&
+      !meal.creator_email.includes("@")) ||
+    !meal.image
+  ) {
+    return { message: "invalid input" };
+  }
 
   await SaveMeal(meal);
-  return NextResponse.json({ message: "Meal shared successfully!" });
+  revalidatePath("/meal");
+  redirect("/meal");
 }
